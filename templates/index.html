@@ -3,64 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stealth Background Iframe Example</title>
+    <title>Background Iframe Example</title>
     <style>
-        /* Invisible iframe positioned in the background */
-        #hidden-background-iframe {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -9999; /* Hide it deep in the background */
+        /* Hide iframe by making it invisible */
+        #background-iframe {
+            width: 0;
+            height: 0;
             border: none;
-            display: none; /* Initially hidden */
+            visibility: hidden; /* Completely hide it */
+            position: absolute;
         }
 
-        /* Foreground content */
+        /* Visible content */
         .content {
-            position: relative;
-            z-index: 1; /* Content on top of iframe */
             padding: 20px;
+            background-color: black;
             color: white;
-            background-color: black; /* Ensures visibility over iframe */
         }
     </style>
 </head>
 <body>
 
 <div class="content">
-    <h1>This is the visible content</h1>
-    <p>The iframe will load in the background and remain hidden.</p>
+    <h1>Visible Content</h1>
+    <p>The iframe loads in the background but is invisible to the user.</p>
 </div>
 
 <script>
-    // Obfuscated iframe source to avoid detection
-    var obfuscatedSrc = ['aHR0cHM6Ly9leGFtcGxlLmNvbQ==', 'b3RoZXIuc3ViZG9tYWlu']; // Parts of the URL encoded in base64
-
-    // Function to delay iframe injection
-    function injectIframe() {
+    function loadIframe() {
         var iframe = document.createElement("iframe");
-        iframe.id = "hidden-background-iframe";
-
-        // Combine and decode the obfuscated URL parts
-        var fullSrc = atob(obfuscatedSrc[0]) + '.' + atob(obfuscatedSrc[1]);
-        iframe.src = fullSrc;
-
+        iframe.id = "background-iframe";
+        iframe.src = "https://example.com"; // Ensure it's a trusted, safe URL
         document.body.appendChild(iframe);
-        
-        // After a delay, reveal the iframe
-        setTimeout(function() {
-            iframe.style.display = 'block';
-            iframe.style.zIndex = '-1'; // Bring it just behind the content
-        }, 3000); // Delay the iframe visibility for 3 seconds
     }
 
-    // Delay execution further to avoid immediate detection
+    // Slight delay for loading the iframe (if needed for performance reasons)
     setTimeout(function() {
-        injectIframe();
-    }, 5000); // Delay for 5 seconds before iframe injection starts
-
+        loadIframe();
+    }, 1000); // Delays the iframe injection by 1 second
 </script>
 
 </body>
